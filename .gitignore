@@ -1,3 +1,5 @@
+.gitignore
+
 # built application files
 *.log
 
@@ -11,4 +13,8 @@ target/
 local.properties
 
 # Intellij project files
-*.iml *.ipr *.iws .idea/ project.properties
+*.iml
+*.ipr
+*.iws
+project.properties
+.idea/
