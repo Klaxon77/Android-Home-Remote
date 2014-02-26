@@ -1,6 +1,6 @@
 package com.klaxon.remote.common.io.socket
 
-import com.klaxon.remote.common.io.Client
+import com.klaxon.remote.common.io.{MessageHandler, Client}
 import java.net.SocketAddress
 import org.apache.mina.transport.socket.nio.NioSocketConnector
 import org.apache.mina.filter.codec.ProtocolCodecFilter
@@ -11,11 +11,11 @@ import org.apache.mina.filter.codec.serialization.ObjectSerializationCodecFactor
  * <p>date 2/19/14</p>
  * @author klaxon
  */
-abstract class SocketClient(val socketAddress: SocketAddress) extends Client {
+class SocketClient(socketAddress: SocketAddress, override val messageHandler: MessageHandler) extends Client {
   private val client = new NioSocketConnector()
 
   client.getFilterChain.addLast("codec", new ProtocolCodecFilter(new ObjectSerializationCodecFactory()))
-  client.setHandler(new SocketIoHandler(this)) //TODO: this reference escapes during construction time. Fix this problem
+  client.setHandler(new SocketIoHandler(messageHandler))
   val connectFuture = client.connect(socketAddress)
 
   override def !(message: Any): Unit = {

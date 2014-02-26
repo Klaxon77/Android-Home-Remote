@@ -10,11 +10,16 @@ trait OutputChannel {
 }
 
 /**
- * Endpoint should handle incoming messages in receive method.
+ * Handles incoming messages in receive method.
  */
-trait Endpoint extends Closeable {
+trait MessageHandler {
   def receive(message: Any, sender: OutputChannel)
 }
 
-trait Client extends Endpoint with OutputChannel
-trait Server extends Endpoint
+trait MessageHandlerComponent {
+  val messageHandler: MessageHandler
+}
+
+trait Client extends MessageHandlerComponent with OutputChannel with Closeable
+
+trait Server extends MessageHandlerComponent with Closeable
