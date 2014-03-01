@@ -17,11 +17,16 @@ class DeviceManipulator(robot: Robot) extends MessageHandler {
 
   def this() = this(new Robot())
 
-  def receive(message: Any, sender: OutputChannel): Unit = message match {
-    case Click => leftClick()
-    case DoubleClick => doubleClick()
-    case RightClick => rightClick()
-    case Move(coordinate) => move(mouseLocationFrom(coordinate))
+  def receive(message: Any, sender: OutputChannel): Unit = {
+    println("received " + message)
+
+    message match {
+      case Click() => leftClick()
+      case DoubleClick() => doubleClick()
+      case RightClick() => rightClick()
+      case Move (coordinate) => move (mouseLocationFrom (coordinate))
+      case _ => println(message)
+    }
   }
 
   private def leftClick() = {
@@ -40,17 +45,20 @@ class DeviceManipulator(robot: Robot) extends MessageHandler {
   }
 
   private def mouseLocationFrom(p: Point): (Int, Int) = p match {
-    case MovePoint(x, y) =>
+    case RelativePoint(x, y) =>
       val mouseLocation = MouseInfo.getPointerInfo.getLocation
       (mouseLocation.x + x, mouseLocation.y + y)
 
-    case RelativePoint(x, y) =>
+    case MovePoint(x, y) =>
       val displayMode = GraphicsEnvironment.getLocalGraphicsEnvironment.getDefaultScreenDevice.getDisplayMode
       val xPos = displayMode.getWidth * x
       val yPos = displayMode.getHeight * y
       (xPos.toInt, yPos.toInt)
   }
 
-  private def move(point: (Int, Int)) = robot.mouseMove(point._1, point._2)
+  private def move(point: (Int, Int)) = {
+    println("moving to " + point)
+    robot.mouseMove(point._1, point._2)
+  }
 
 }
