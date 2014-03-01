@@ -18,5 +18,8 @@ class SocketServer(socketAddress: SocketAddress, override val messageHandler: Me
   server.setHandler(new SocketIoHandler(messageHandler))
   server.bind(socketAddress)
 
-  override def close(): Unit = server.unbind()
+  override def close(): Unit = {
+    server.unbind()
+    server.dispose()
+  }
 }
