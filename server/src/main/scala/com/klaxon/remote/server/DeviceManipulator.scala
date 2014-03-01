@@ -45,11 +45,11 @@ class DeviceManipulator(robot: Robot) extends MessageHandler {
   }
 
   private def mouseLocationFrom(p: Point): (Int, Int) = p match {
-    case RelativePoint(x, y) =>
+    case MovePoint(x, y) =>
       val mouseLocation = MouseInfo.getPointerInfo.getLocation
       (mouseLocation.x + x, mouseLocation.y + y)
 
-    case MovePoint(x, y) =>
+    case ExactPoint(x, y) =>
       val displayMode = GraphicsEnvironment.getLocalGraphicsEnvironment.getDefaultScreenDevice.getDisplayMode
       val xPos = displayMode.getWidth * x
       val yPos = displayMode.getHeight * y

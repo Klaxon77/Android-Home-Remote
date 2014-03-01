@@ -14,7 +14,7 @@ sealed trait Point
  * (0.5, 0.5) is center
  * (1, 1) is bottom-right point of screen}}}
  */
-case class MovePoint(x: Int, y: Int) extends Point {
+case class ExactPoint(x: Double, y: Double) extends Point {
   require(x >= 0 && x <= 1, "x should be in range [0, 1]")
   require(y >= 0 && y <= 1, "y should be in range [0, 1]")
 }
@@ -28,4 +28,4 @@ case class MovePoint(x: Int, y: Int) extends Point {
  * RelativeMove is (17, 3)
  * Then current cursor position should be moved to (117, 5)}}}
  */
-case class RelativePoint(x: Double, y: Double) extends Point
+case class MovePoint(x: Int, y: Int) extends Point

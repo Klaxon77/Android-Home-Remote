@@ -26,7 +26,7 @@ class SocketClientServerTest extends Specification {
 }
 
 trait clientServer extends After {
-  private val socketAddress = new InetSocketAddress(InetAddress.getLocalHost, 6565)
+  private val socketAddress = new InetSocketAddress(6565)
 
   val serverMessagesBlockingQueue = new LinkedBlockingQueue[Any]()
   val server = new SocketServer(socketAddress, new ServerHandlerMock(serverMessagesBlockingQueue))
