@@ -57,7 +57,6 @@ class DeviceManipulator(robot: Robot) extends MessageHandler {
   }
 
   private def move(point: (Int, Int)) = {
-    println("moving to " + point)
     robot.mouseMove(point._1, point._2)
   }
 
