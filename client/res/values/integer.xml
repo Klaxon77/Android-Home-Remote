@@ -1,0 +1,5 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <integer name="swipe_threshold">24</integer>
+    <integer name="toast_duration_millis">500</integer>
+</resources>

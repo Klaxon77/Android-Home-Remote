@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">Home client remote</string>
+    <string name="connect">Connect</string>
+    <string name="no_connection">Could not connect</string>
+    <string name="try_again">Try again</string>
+    <string name="remote_address">Remote address</string>
+    <string name="wrong_address">Wrong host address provided</string>
+    <string name="no_network_connection">Turn on network connection</string>
+
+</resources>

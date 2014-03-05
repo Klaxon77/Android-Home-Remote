@@ -1,6 +1,6 @@
 package com.klaxon.remote.common.io.socket
 
-import com.klaxon.remote.common.io.{MessageHandler, Client}
+import com.klaxon.remote.common.io.{OutputChannel, MessageHandler, Client}
 import java.net.SocketAddress
 import org.apache.mina.transport.socket.nio.NioSocketConnector
 import org.apache.mina.filter.codec.ProtocolCodecFilter
@@ -14,6 +14,8 @@ import org.apache.mina.filter.codec.serialization.ObjectSerializationCodecFactor
 class SocketClient(socketAddress: SocketAddress, override val messageHandler: MessageHandler) extends Client {
   private val client = new NioSocketConnector()
 
+  def this(socketAddress: SocketAddress) = this(socketAddress, new NullMessageHandler)
+
   client.getFilterChain.addLast("codec", new ProtocolCodecFilter(new ObjectSerializationCodecFactory()))
   client.setHandler(new SocketIoHandler(messageHandler))
   val connectFuture = client.connect(socketAddress)
@@ -25,6 +27,10 @@ class SocketClient(socketAddress: SocketAddress, override val messageHandler: Me
   }
 
   override def close() = client.dispose()
+}
+
+private class NullMessageHandler extends MessageHandler {
+  override def receive(message: Any, sender: OutputChannel) = {}
 }
 
 
