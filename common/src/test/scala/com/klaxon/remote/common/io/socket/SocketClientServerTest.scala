@@ -3,12 +3,13 @@ package com.klaxon.remote.common.io.socket
 import org.specs2.mutable.{After, Specification}
 import org.junit.runner.RunWith
 import org.specs2.runner.JUnitRunner
-import java.net.{InetAddress, InetSocketAddress}
+import java.net.InetSocketAddress
 import com.klaxon.remote.common.message._
 import com.klaxon.remote.common.message.DoubleClick
 import com.klaxon.remote.common.message.Click
 import java.util.concurrent.{LinkedBlockingQueue, TimeUnit}
 import com.klaxon.remote.common.io.{MessageHandler, OutputChannel}
+import java.io.IOException
 
 @RunWith(classOf[JUnitRunner])
 class SocketClientServerTest extends Specification {
@@ -23,6 +24,12 @@ class SocketClientServerTest extends Specification {
     }
   }
 
+  "Client" should {
+    "throw exception when it can't establish connection" in {
+      new SocketClient(new InetSocketAddress(4044)) must throwA[IOException]
+    }
+  }
+
 }
 
 trait clientServer extends After {
@@ -30,16 +37,12 @@ trait clientServer extends After {
 
   val serverMessagesBlockingQueue = new LinkedBlockingQueue[Any]()
   val server = new SocketServer(socketAddress, new ServerHandlerMock(serverMessagesBlockingQueue))
-  val client = new SocketClient(socketAddress, new ClientHandlerMock())
+  val client = new SocketClient(socketAddress)
 
   override def after: Any = {
     client.close()
     server.close()
   }
-}
-
-class ClientHandlerMock extends MessageHandler {
-  override def receive(message: Any, sender: OutputChannel) = {}
 }
 
 class ServerHandlerMock(serverMessages: LinkedBlockingQueue[Any]) extends MessageHandler {
