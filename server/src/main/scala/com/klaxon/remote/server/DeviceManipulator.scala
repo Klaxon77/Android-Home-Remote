@@ -17,16 +17,12 @@ class DeviceManipulator(robot: Robot) extends MessageHandler {
 
   def this() = this(new Robot())
 
-  def receive(message: Any, sender: OutputChannel): Unit = {
-    println("received " + message)
-
-    message match {
-      case Click() => leftClick()
-      case DoubleClick() => doubleClick()
-      case RightClick() => rightClick()
-      case Move (coordinate) => move (mouseLocationFrom (coordinate))
-      case _ => println(message)
-    }
+  def receive(message: Any, sender: OutputChannel): Unit = message match {
+    case Click() => leftClick()
+    case DoubleClick() => doubleClick()
+    case RightClick() => rightClick()
+    case Move(coordinate) => move(mouseLocationFrom(coordinate))
+    case _ => println(message)
   }
 
   private def leftClick() = {
@@ -56,8 +52,7 @@ class DeviceManipulator(robot: Robot) extends MessageHandler {
       (xPos.toInt, yPos.toInt)
   }
 
-  private def move(point: (Int, Int)) = {
-    robot.mouseMove(point._1, point._2)
-  }
+  private def move(point: (Int, Int)) = robot.mouseMove(point._1, point._2)
+
 
 }
