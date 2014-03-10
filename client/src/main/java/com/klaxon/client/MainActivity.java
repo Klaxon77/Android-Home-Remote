@@ -15,7 +15,6 @@ import com.klaxon.remote.common.io.socket.SocketClient;
 import java.net.InetAddress;
 import java.net.InetSocketAddress;
 import java.net.SocketAddress;
-import java.net.UnknownHostException;
 
 /**
  * <p>date 2/27/14 </p>
@@ -45,7 +44,7 @@ public class MainActivity extends Activity {
     @Override
     protected void onPause() {
         super.onPause();
-        client.close();
+        if (client != null) client.close();
     }
 
     @Override
@@ -81,7 +80,11 @@ public class MainActivity extends Activity {
             }
 
             SocketAddress address = new InetSocketAddress(host, Configuration.PORT());
-            client = new SocketClient(address);
+            client = ConnectionHelper.client(address);
+            if (client == null) {
+                Toast.makeText(MainActivity.this, R.string.fail_connect_to_server, toastDuration).show();
+                return;
+            }
 
             connectionFormView.setVisibility(View.GONE);
             rootView.setOnTouchListener(new ManipulatorTouchListener(client, getResources().getInteger(R.integer.swipe_threshold)));

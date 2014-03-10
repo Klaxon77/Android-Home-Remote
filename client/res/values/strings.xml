@@ -7,5 +7,6 @@
     <string name="remote_address">Remote address</string>
     <string name="wrong_address">Wrong host address provided</string>
     <string name="no_network_connection">Turn on network connection</string>
+    <string name="fail_connect_to_server">Failed to connect to server</string>
 
 </resources>

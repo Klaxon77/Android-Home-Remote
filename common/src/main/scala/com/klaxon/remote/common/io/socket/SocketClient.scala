@@ -15,7 +15,7 @@ import scala.util.Try
  * <p>date 2/19/14</p>
  * @author klaxon
  */
-class SocketClient(socketAddress: SocketAddress, override val messageHandler: MessageHandler) extends Client {
+@throws(classOf[IOException]) class SocketClient(socketAddress: SocketAddress, override val messageHandler: MessageHandler) extends Client  {
   private val client = new NioSocketConnector()
 
   client.getFilterChain.addLast("codec", new ProtocolCodecFilter(new ObjectSerializationCodecFactory()))
@@ -32,12 +32,6 @@ class SocketClient(socketAddress: SocketAddress, override val messageHandler: Me
   }
 
   override def close() = client.dispose()
-}
-
-object SocketClient {
-
-  def apply(): Try[SocketClient] = Try(new SocketClient())
-
 }
 
 private class NullMessageHandler extends MessageHandler {
