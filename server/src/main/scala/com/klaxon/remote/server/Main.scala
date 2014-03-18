@@ -39,7 +39,7 @@ object Main {
 
   private def startServer(host: InetAddress): Unit = {
     val address = new InetSocketAddress(host, Configuration.PORT)
-    val server = new SocketServer(address, new DeviceManipulator())
+    val server = new SocketServer(address, serverMessageHandler)
 
     while (true) {
       println("Press [q] to stop server")
@@ -51,6 +51,8 @@ object Main {
       }
     }
   }
+
+  private def serverMessageHandler = CompositeMessageHandler(new MouseManipulator, new AudioManipulator)
 
   private def printlnWithLine(x: Any) = {
     println(HORIZONTAL_LINE)

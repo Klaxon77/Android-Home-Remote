@@ -13,7 +13,7 @@ import com.klaxon.remote.common.message.DoubleClick
  * <p>date 2/25/14 </p>
  * @author klaxon
  */
-class DeviceManipulator(robot: Robot) extends MessageHandler {
+class MouseManipulator(robot: Robot) extends MessageHandler {
 
   def this() = this(new Robot())
 
@@ -22,7 +22,7 @@ class DeviceManipulator(robot: Robot) extends MessageHandler {
     case DoubleClick() => doubleClick()
     case RightClick() => rightClick()
     case Move(coordinate) => move(mouseLocationFrom(coordinate))
-    case _ => println(message)
+    case _ =>
   }
 
   private def leftClick() = {
