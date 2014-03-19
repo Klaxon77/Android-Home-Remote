@@ -27,5 +27,9 @@
             </intent-filter>
         </activity>
 
+        <activity
+            android:name="com.klaxon.client.ManipulatorActivity"
+            android:theme="@android:style/Theme.NoTitleBar.Fullscreen"/>
+
     </application>
 </manifest>
