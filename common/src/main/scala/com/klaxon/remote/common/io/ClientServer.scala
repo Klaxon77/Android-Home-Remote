@@ -1,6 +1,5 @@
 package com.klaxon.remote.common.io
 
-import java.io.Closeable
 
 /**
  * Channel by which you can send your messages
@@ -18,6 +17,10 @@ trait MessageHandler {
 
 trait MessageHandlerComponent {
   val messageHandler: MessageHandler
+}
+
+trait Closeable {
+  def close(): Unit
 }
 
 trait Client extends MessageHandlerComponent with OutputChannel with Closeable
